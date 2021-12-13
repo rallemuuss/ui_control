@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/daniel/handirob_ws/install_isolated/include/**",
+        "/home/daniel/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/daniel/catkin_ws/src/fiducials/fiducial_slam/include/**",
+        "/home/daniel/catkin_ws/src/handirob_behaviortree/include/**",
+        "/home/daniel/catkin_ws/src/handirob/handirob_slam/include/**",
+        "/home/daniel/catkin_ws/src/idt/mavlink_lora/include/**",
+        "/home/daniel/catkin_ws/src/realsense-ros/realsense2_camera/include/**",
+        "/home/daniel/catkin_ws/src/stand_pose/include/**",
+        "/home/daniel/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/daniel/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
