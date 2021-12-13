@@ -28,13 +28,13 @@ const randn_bm = (min, max) => {		// Normally distributed random
 async function wink(shutEye = $("#reye"), shutPupil = $("#rpup")) {
 	await eyeMutex.runExclusive(async () => {
 		var eye = $(".eye");
-		var lid = $(".lid");
+		var llid = $(".llid");
 		var pupil = $(".pupil");
 		eye.css({
 			height: "200px",
 			top: "50px" });
 
-		lid.css({
+		llid.css({
 			top: "200px" });
 
 		await new Promise(r => setTimeout(r, 100));
@@ -58,7 +58,7 @@ async function wink(shutEye = $("#reye"), shutPupil = $("#rpup")) {
 			top: "0px",
 			background: "white" });
 
-		lid.css({
+		llid.css({
 			top: "250px" });
 
 		shutPupil.css({
@@ -91,6 +91,16 @@ $("body").keypress(function (event) {
 	if (event.key == "s") {
 		alert("Press detected");
 	}
+	if (event.key == "w") {
+		setMode("worried");
+	}
+	if (event.key == "q") {
+		setMode("angry");
+	}
+	if (event.key == "e") {
+		setMode("normal");
+	}
+	
 });
 
 async function look_around(consistent = false) {
@@ -143,5 +153,44 @@ async function blink(consistent = false) {
 	} while (consistent);
 }
 
-export { look_around, blink };
+function setMode(mode) {
+	var ulid = $(".ulid");	
+	if (mode == "worried") {
+		ulid.css({
+			top: "-180px",
+			width: "250px",
+			borderRadius: "",
+			transform: ""
+		});
+	}
+	else if (mode == "normal"){
+		ulid.css({
+			top: "",
+			width: "",
+			borderRadius: "",
+			transform: ""
+		});
+	}
+	else if (mode == "angry") {
+		var llidu = $("#llidu"); 
+		var rlidu = $("#rlidu");
+		ulid.css({
+			top: "-200px",
+			width: "250px",
+			borderRadius: "40px"
+		});
+		llidu.css({
+			transform: "rotate(10deg)"
+		});
+		rlidu.css({
+			transform: "rotate(-10deg)"
+		});
+	}
+	else {
+		return false;
+	}
+	return true;
+}
+
+export { look_around, blink, setMode };
 console.log("Face_functionality.js loaded ok");

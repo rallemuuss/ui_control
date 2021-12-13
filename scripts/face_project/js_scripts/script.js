@@ -43,38 +43,39 @@ var setBoolServer = new ROSLIB.Service({
 setBoolServer.advertise(function(request, response) {
 	console.log('Received service request on ' + setBoolServer.name + ': ' + request.mode);
 	response['response'] = 'Set successfully';
-	var ulid = $(".ulid");	
-	if (request.mode == "worried") {
-		ulid.css({
-			top: "-180px",
-			width: "250px",
-			borderRadius: "",
-			transform: ""
-		});
-	}
-	else if (request.mode == "normal"){
-		ulid.css({
-			top: "",
-			width: "",
-			borderRadius: "",
-			transform: ""
-		});
-	}
-	else if (request.mode == "angry") {
-		var llidu = $("#llidu"); 
-		var rlidu = $("#rlidu");
-		ulid.css({
-			top: "-200px",
-			width: "250px",
-			borderRadius: "40px"
-		});
-		llidu.css({
-			transform: "rotate(10deg)"
-		});
-		rlidu.css({
-			transform: "rotate(-10deg)"
-		});
-	}
+	setMode(request.mode)
+	// var ulid = $(".ulid");	
+	// if (request.mode == "worried") {
+	// 	ulid.css({
+	// 		top: "-180px",
+	// 		width: "250px",
+	// 		borderRadius: "",
+	// 		transform: ""
+	// 	});
+	// }
+	// else if (request.mode == "normal"){
+	// 	ulid.css({
+	// 		top: "",
+	// 		width: "",
+	// 		borderRadius: "",
+	// 		transform: ""
+	// 	});
+	// }
+	// else if (request.mode == "angry") {
+	// 	var llidu = $("#llidu"); 
+	// 	var rlidu = $("#rlidu");
+	// 	ulid.css({
+	// 		top: "-200px",
+	// 		width: "250px",
+	// 		borderRadius: "40px"
+	// 	});
+	// 	llidu.css({
+	// 		transform: "rotate(10deg)"
+	// 	});
+	// 	rlidu.css({
+	// 		transform: "rotate(-10deg)"
+	// 	});
+	// }
 	return true;
 });
 
