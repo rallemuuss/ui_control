@@ -92,13 +92,13 @@ $("body").keypress(function (event) {
 		alert("Press detected");
 	}
 	if (event.key == "w") {
-		setMode("worried");
+		setMood("worried");
 	}
 	if (event.key == "q") {
-		setMode("angry");
+		setMood("angry");
 	}
 	if (event.key == "e") {
-		setMode("normal");
+		setMood("normal");
 	}
 	
 });
@@ -153,9 +153,9 @@ async function blink(consistent = false) {
 	} while (consistent);
 }
 
-function setMode(mode) {
+function setMood(mood) {
 	var ulid = $(".ulid");	
-	if (mode == "worried") {
+	if (mood == "worried") {
 		ulid.css({
 			top: "-180px",
 			width: "250px",
@@ -163,7 +163,7 @@ function setMode(mode) {
 			transform: ""
 		});
 	}
-	else if (mode == "normal"){
+	else if (mood == "normal"){
 		ulid.css({
 			top: "",
 			width: "",
@@ -171,7 +171,7 @@ function setMode(mode) {
 			transform: ""
 		});
 	}
-	else if (mode == "angry") {
+	else if (mood == "angry") {
 		var llidu = $("#llidu"); 
 		var rlidu = $("#rlidu");
 		ulid.css({
@@ -192,5 +192,5 @@ function setMode(mode) {
 	return true;
 }
 
-export { look_around, blink, setMode };
+export { look_around, blink, setMood };
 console.log("Face_functionality.js loaded ok");

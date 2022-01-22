@@ -35,15 +35,15 @@ listener.subscribe(function	(message) {
 // The Service object does double duty for both calling and advertising services
 var setBoolServer = new ROSLIB.Service({
 	ros : ros,
-	name : '/ui_control/setmode',
-	serviceType : '/ui_control/ui_mode'
+	name : '/ui_control/setmood',
+	serviceType : '/ui_control/ui_mood'
 });
 
 // Use the advertise() method to indicate that we want to provide this service
 setBoolServer.advertise(function(request, response) {
-	console.log('Received service request on ' + setBoolServer.name + ': ' + request.mode);
+	console.log('Received service request on ' + setBoolServer.name + ': ' + request.mood);
 	response['response'] = 'Set successfully';
-	setMode(request.mode)
+	face_functionality.setMood(request.mood);
 	// var ulid = $(".ulid");	
 	// if (request.mode == "worried") {
 	// 	ulid.css({
