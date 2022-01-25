@@ -1,83 +1,71 @@
 //var url_ = "ws://192.168.87.18:9090"; 
 var url_ = "ws://localhost:9090"
 var url_ = "ws://0.0.0.0:9090"
+var	ros;
+var setMoodServer;
 
-var	ros	= new ROSLIB.Ros({
-	url:  url_ });
+function connect() {
+	ros	= new ROSLIB.Ros({
+		url:  url_ });
 
-ros.on("connection", function () {
-	console.log("Connected to websocket	server.");
-});
+	ros.on("connection", function () {
+		console.log("Connected to websocket	server.");
+		createRosConnections() 
+	});
 
-ros.on("error",	function (error) {
-	console.log("Error connecting to websocket server: ", error);
-});
+	ros.on("error",	function (error) {
+		console.log("Error connecting to websocket server: ", error);
+	});
 
-ros.on("close",	function () {
-	console.log("Connection	to websocket server	closed.");
-});
-
-// Subscribing to a	Topic
-// ----------------------
-
-var	listener = new ROSLIB.Topic({
-	ros: ros,
-	name:	"/ui/look",
-	messageType: "std_msgs/String" });
+	ros.on("close",	function () {
+		console.log("Connection	to websocket server	closed.");
+		setTimeout(connect,5000);
+		console.log("Attempting reconnect")
+	});
+}
+connect();
 
 
-listener.subscribe(function	(message) {
-	console.log("Received	message	on " + listener.name + ": "	+ message.data);
-});
+function createRosConnections() {
+	// Subscribing to a	Topic
+	// ----------------------
+	// Currently unused...
 
-// Creating a service 
-// ----------------------
-// The Service object does double duty for both calling and advertising services
-var setBoolServer = new ROSLIB.Service({
-	ros : ros,
-	name : '/ui_control/setmood',
-	serviceType : '/ui_control/ui_mood'
-});
+	var	listener = new ROSLIB.Topic({
+		ros: ros,
+		name:	"/ui/look",
+		messageType: "std_msgs/String" });
 
-// Use the advertise() method to indicate that we want to provide this service
-setBoolServer.advertise(function(request, response) {
-	console.log('Received service request on ' + setBoolServer.name + ': ' + request.mood);
-	response['response'] = 'Set successfully';
-	face_functionality.setMood(request.mood);
-	// var ulid = $(".ulid");	
-	// if (request.mode == "worried") {
-	// 	ulid.css({
-	// 		top: "-180px",
-	// 		width: "250px",
-	// 		borderRadius: "",
-	// 		transform: ""
-	// 	});
-	// }
-	// else if (request.mode == "normal"){
-	// 	ulid.css({
-	// 		top: "",
-	// 		width: "",
-	// 		borderRadius: "",
-	// 		transform: ""
-	// 	});
-	// }
-	// else if (request.mode == "angry") {
-	// 	var llidu = $("#llidu"); 
-	// 	var rlidu = $("#rlidu");
-	// 	ulid.css({
-	// 		top: "-200px",
-	// 		width: "250px",
-	// 		borderRadius: "40px"
-	// 	});
-	// 	llidu.css({
-	// 		transform: "rotate(10deg)"
-	// 	});
-	// 	rlidu.css({
-	// 		transform: "rotate(-10deg)"
-	// 	});
-	// }
-	return true;
-});
+
+	listener.subscribe(function	(message) {
+		console.log("Received	message	on " + listener.name + ": "	+ message.data);
+	});
+
+	// Creating a service 
+	// ----------------------
+	// The Service object does double duty for both calling and advertising services
+	// Handles setting of mood of eyes.
+	setMoodServer = new ROSLIB.Service({
+		ros : ros,
+		name : '/ui_control/setmood',
+		serviceType : '/ui_control/ui_mood'
+	});
+
+	// Use the advertise() method to indicate that we want to provide this service
+	setMoodServer.advertise(function(request, response) {
+		console.log('Received service request on ' + setMoodServer.name + ': ' + request.mood);
+		if (face_functionality.setMood(request.mood)) {
+			response['response'] = 'Set successfully';
+			console.log('I understood the assignment')
+		}
+		else {
+			response['response'] = 'Unknown command';
+			console.log("I don't know what mood = '" + request.mood + "' means")
+		}
+		return true;
+	});
+
+}
 
 //import { look_around,	blink }	from './face_functionality.js';
 import * as face_functionality from	'./face_functionality.js';
